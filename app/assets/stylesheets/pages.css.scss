@@ -1,0 +1,141 @@
+// Place all the styles related to the Page controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  background:#000 url(/assets/dotted_back.png) repeat;
+}
+
+
+
+#bracketWrap {
+  -webkit-transition: all 1s ease-in-out;
+  position:absolute;left:0;right:0;top:0;bottom:20%;background:transparent url(/assets/main_bg.png) no-repeat center center
+}
+
+#bracketWrap.zoom {
+  left:-20%;
+  right:-24%;
+
+  .col16 {
+    opacity:0;
+  }
+}
+
+.teamDropDown {
+  position:absolute;
+  text-shadow:3px 3px 3px #000;
+}
+
+.teamDropDown.top {
+  top:-15px;
+}
+
+.teamDropDown.bottom {
+  bottom:-15px;
+}
+
+.column {
+  float:left;
+  -webkit-transition: all 1s ease-in-out;
+  height:100%;
+  width:14%;
+  position:relative;
+
+  .bracket.left {
+    border-width:2px 1px 2px 0;
+  }
+
+  .bracket.right {
+    border-width:2px 0 2px 1px;
+  }
+
+  .bracket.middle {
+    border-width:2px 0;
+  }
+  .bracket {
+    position:absolute;
+    border:1px solid #666;
+    width:100%;
+  }
+}
+
+.col16 { 
+
+  .bracket {
+    height:15%;
+  }
+  .bracket1 {
+    top:5%;
+  }
+  .bracket2 {
+    top:30%;
+  } 
+  .bracket3 {
+    top:55%
+  }
+  .bracket4 {
+    top:80%;
+  }
+}
+
+
+.col8 {
+  .bracket {
+    height:25%;
+  }
+  .bracket1 {
+    top:12.5%;
+  }
+  .bracket2 {
+    top:62.5%;
+  }
+}
+
+.col4 {
+  .bracket {
+    height:50%;
+    top:25%;
+  }
+}
+
+.col2 {
+  .bracket {
+    height:25%;
+    top:37.5%;
+  }
+}
+
+.song {
+  border:1px solid silver;
+  overflow:hidden;
+  float:left;
+  margin-left:10px;
+
+  h3 {
+    position:absolute;
+  }
+}
+
+.song.current {
+ -moz-box-shadow: 0 0 5px 5px rgba(0,0,0,.5);
+-webkit-box-shadow: 0 0 5px 5px rgba(0,0,0,.5);
+box-shadow: 0 0 5px 5px rgba(0,0,0,.5); 
+  h3 {
+    display:none;
+  }
+}
+
+
+input, textarea, select {
+  border:none;
+  font-size: 20px;
+  color: #fff;
+  font-family: helvetica, sans-serif;
+  -webkit-appearance: none;
+}
+
+select {
+  text-shadow:3px 3px 3px #000;
+  padding: 0;
+  background:transparent
+}

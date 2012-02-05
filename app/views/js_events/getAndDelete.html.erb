@@ -1,0 +1,20 @@
+<h1>Listing js_events</h1>
+
+<table>
+  <tr>
+    <th>Functionname</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @js_events.each do |js_event| %>
+  <tr>
+    <td><%= js_event.functionName %></td>
+    <td><%= link_to 'Show', js_event %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

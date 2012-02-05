@@ -1,0 +1,23 @@
+<h1>Listing js_events</h1>
+
+<table>
+  <tr>
+    <th>Functionname</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @js_events.each do |js_event| %>
+  <tr>
+    <td><%= js_event.functionName %></td>
+    <td><%= link_to 'Show', js_event %></td>
+    <td><%= link_to 'Edit', edit_js_event_path(js_event) %></td>
+    <td><%= link_to 'Destroy', js_event, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Js event', new_js_event_path %>

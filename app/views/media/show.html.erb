@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Format:</b>
+  <%= @medium.format %>
+</p>
+
+<p>
+  <b>Src:</b>
+  <%= @medium.src %>
+</p>
+
+<% if @medium.format == "audio" %>
+  <div class="album">
+    <img src="/assets/media/<%= @medium.src.gsub("mp3","jpg") %>" />
+  </div>
+  <audio controls src="/assets/media/<%= @medium.src %>"></audio>
+<% else %>
+  <div class="video">
+    <video id="myVideo" controls src="/assets/media/<%= @medium.src %>" style="-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(black),color-stop(0.4, transparent));"></video> 
+<% end %>
+
+<%= link_to 'Edit', edit_medium_path(@medium) %> |
+<%= link_to 'Back', media_path %>
+<style>
+    video {
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 4s;
+    }
+ 
+    body { -webkit-perspective: 500;}
+</style>
+<script type="text/javascript">
+var flipped = 0 ;
+ 
+function flipper() {
+    if (flipped)
+        myVideo.style.webkitTransform = "rotateY(0deg)";
+    else
+        myVideo.style.webkitTransform = "rotateY(180deg)";
+    flipped = !flipped ;
+}
+ 
+</script>
