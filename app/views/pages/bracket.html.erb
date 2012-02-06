@@ -1,3 +1,4 @@
+<div id="wheel" style="background:transparent url(/assets/wheel.png) center center;width:1024px;height:768px;position:absolute;left:0;top:0;z-index:10"></div>  
 <% spot = 0 %>
 <div style="position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;">
   <div id="bracketWrap">
@@ -60,9 +61,35 @@
 
 <script type="text/javascript">
   var q = [],
-  eventQ = [],
-  fuckYou = {};
+    eventQ = [],
+    fuckYou = {},
+    wheelRot = 0;
 
+  function rotate() {
+    var w = $("#wheel"),
+        tracker = 0,
+        start = wheelRot,
+        speed = Math.random() * 10 + 5;
+
+      spinTime = 0,
+      spinTimeTotal = Math.random() * 3 + 4 * 1000,
+
+    (function spin() {
+     var currAngle = start + tracker; 
+
+      w.css("-webkit-transform", "rotate("+currAngle+"deg)");
+      tracker += speed;
+      speed = speed/1.01;
+
+      if(speed > .03 ) {
+        setTimeout(spin, 10)
+      } else {
+        wheelRot = currAngle%360
+      }
+
+    })()
+  }
+  
   $.fn.stopVideo = function() {
     this.removeClass("current").find("video").get(0).pause();
     return this;
@@ -120,7 +147,6 @@
         success: function(d) {
           for(var i=0,l=d.length;i<l;i++) {
             if(d[i].team_id == "") {continue;}
-            console.log($("#spot"+d[i].location))
             $("#spot"+d[i].location).val(d[i].team_id);
           }
         }
