@@ -1,9 +1,14 @@
 AntiVDay::Application.routes.draw do
+  resources :teams
+
+  resources :spots
+
   resources :js_events
 
   resources :media
   
   match '/getAndDeleteEvents' => 'js_events#getAndDelete'
+  match '/updateSpot' => 'spots#ajaxUpdate'
 
   root :to => 'pages#bracket'
 

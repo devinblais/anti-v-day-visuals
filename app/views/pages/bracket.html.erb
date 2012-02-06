@@ -1,23 +1,24 @@
+<% spot = 0 %>
 <div style="position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;">
   <div id="bracketWrap">
     <div class="column col16">
       <% 4.times do |x| %>
         <div class="bracket left bracket<%= x+1 %>">
-        <%= render :partial => 'teams', :locals => {} %>
+          <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
     <div class="column col8">
       <% 2.times do |x| %>
         <div class="bracket left bracket<%= x+1 %>">
-        <%= render :partial => 'teams', :locals => {} %>
+          <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
     <div class="column col4">
       <% 1.times do |x| %>
         <div class="bracket left bracket<%= x+1 %>">
-        <%= render :partial => 'teams', :locals => {} %>
+          <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
@@ -29,21 +30,21 @@
     <div class="column col4">
       <% 1.times do |x| %>
         <div class="bracket right bracket<%= x+1 %>">
-        <%= render :partial => 'teams', :locals => {} %>
+          <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
     <div class="column col8">
       <% 2.times do |x| %>
         <div class="bracket right bracket<%= x+1 %>">
-        <%= render :partial => 'teams', :locals => {} %>
+          <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
     <div class="column col16">
       <% 4.times do |x| %>
         <div class="bracket right bracket<%= x+1 %>">
-        <%= render :partial => 'teams', :locals => {} %>
+          <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
@@ -96,10 +97,7 @@
   }
 
 
-  $( function() {
-      
-    //Start polling for new events
-    (function grabEvents() {
+    function grabEvents() {
       if(eventQ.length) { return }
       $.ajax({
         url: "/getAndDeleteEvents.json",
@@ -112,7 +110,42 @@
 
       setTimeout(grabEvents,500);
 
-    })()
+    }
+
+  $( function() {
+    // Load any spots that already exist
+      $.ajax({
+        url: "/spots.json",
+        dataType:"JSON",
+        success: function(d) {
+          for(var i=0,l=d.length;i<l;i++) {
+            if(d[i].team_id == "") {continue;}
+            console.log($("#spot"+d[i].location))
+            $("#spot"+d[i].location).val(d[i].team_id);
+          }
+        }
+      })
+
+      $("#bracketWrap").find("select").bind("change", function() {
+        var location = $(this).attr("id").replace("spot",""),
+          team = $(this).val();
+
+
+        $.ajax({
+          url: "/updateSpot.json",
+          type:'PUT',
+          data:{"location":location, "spot[team_id]":team},
+          success: function() {
+            },
+          error: function(d) {
+          }
+          })
+      })
+
+
+    //Start polling for new events
+    grabEvents();
+
       $.ajax({
         url: "/media.json",
         dataType: "JSON",
@@ -129,7 +162,7 @@
             newSong.css({height:h+"px",width:h+"px"}).find("h3").text(d[i].name)
             newSong.find("video").attr("src",("/assets/media/"+d[i].src)).css("height",h)
               .bind("ended", function() {
-                nextSong();
+                fuckYou.nextSong();
               });
             $("#musicWrap").append(newSong.show());
 

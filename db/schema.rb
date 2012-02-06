@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120205185232) do
+ActiveRecord::Schema.define(:version => 20120205220457) do
 
   create_table "js_events", :force => true do |t|
     t.string   "functionName"
@@ -26,6 +26,21 @@ ActiveRecord::Schema.define(:version => 20120205185232) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "artist"
+  end
+
+  create_table "spots", :force => true do |t|
+    t.integer  "location"
+    t.integer  "team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "spots", ["team_id"], :name => "index_spots_on_team_id"
+
+  create_table "teams", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

@@ -1,9 +1,5 @@
 class PagesController < ApplicationController
   def bracket
-    @teams = [
-      "",
-      "Team one",
-      "Team Two"
-    ]
+    @teams = Team.all
   end
 end

@@ -1,6 +1,6 @@
 <div class="teamDropDown top">
-<%= select_tag "teams", options_for_select(@teams, "name") %>
+  <%= collection_select :spot, :team_id, @teams, :id, :name, {:include_blank => true }, { :id => topID }%>
 </div>
 <div class="teamDropDown bottom">
-<%= select_tag "teams", options_for_select(@teams, "name") %>
+  <%= collection_select :spot, :team_id, @teams, :id, :name, {:include_blank => true }, { :id => bottomID} %>
 </div>
