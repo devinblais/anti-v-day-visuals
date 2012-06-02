@@ -5,6 +5,11 @@
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <% if request.path_parameters[:action] == "mobile" %>
+    <%= javascript_include_tag "jqm.min" %>
+    <%= stylesheet_link_tag "jqm.min" %>
+  <% end %>
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
 </head>
 <body>
 

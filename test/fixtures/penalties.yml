@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  alcohol: false
+  crossfit: false
+  active: false
+  name: MyString
+  img_src: MyString
+
+two:
+  alcohol: false
+  crossfit: false
+  active: false
+  name: MyString
+  img_src: MyString

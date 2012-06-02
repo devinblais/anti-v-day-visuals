@@ -3,13 +3,73 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 body {
   background:#000 url(/assets/dotted_back.png) repeat;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  overflow:hidden;
+  margin:0;
 }
 
+#winningTeam {
+  display:none;
+  z-index:9;
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  text-align:center;
+}
+#winningTeam h1{
+  margin:0 0 50px 0;
+  font:normal 80pt Arial;
+  color:#FFFFFF;
+	text-shadow: 0 1px 0 #ccc,
+	0 2px 0 #c9c9c9,
+	0 3px 0 #bbb,
+	0 4px 0 #b9b9b9,
+	0 5px 0 #aaa,
+	0 6px 1px rgba(0,0,0,.1),
+	0 0 5px rgba(0,0,0,.1),
+	0 1px 3px rgba(0,0,0,.3),
+	0 3px 5px rgba(0,0,0,.2),
+	0 5px 10px rgba(0,0,0,.25),
+	0 10px 10px rgba(0,0,0,.2),
+	0 20px 20px rgba(0,0,0,.15);
+}
 
+.gameOver #winningTeam {
+  display:block;
+}
+#vdayLogo {
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  background:transparent url(/assets/main_bg.png) no-repeat center center
+}
+.gameOver #vdayLogo {
+  background:transparent url(/assets/main_bg.png) no-repeat center top;
+}
+#redGradient {
+  opacity:.4;
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  background: -webkit-linear-gradient(top, #490000, #c10000);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#490000), to(#c10000));
+}
 
 #bracketWrap {
   -webkit-transition: all 1s ease-in-out;
-  position:absolute;left:0;right:0;top:0;bottom:20%;background:transparent url(/assets/main_bg.png) no-repeat center center
+  position:absolute;left:0;right:0;top:0;bottom:30%;
+}
+#musicWrap {
+  position:absolute;left:-20px;right:-5000px;top:70%;bottom:0%;-moz-box-shadow: inset 0 0 5px 5px #000;-webkit-box-shadow: inset 0 0 23px 12px #000;box-shadow: inset 0 0 23 12px #000;
 }
 
 #bracketWrap.zoom {
@@ -34,6 +94,10 @@ body {
   bottom:-15px;
 }
 
+.gameOver .column {
+  display:none;
+}
+
 .column {
   float:left;
   -webkit-transition: all 1s ease-in-out;
@@ -56,6 +120,9 @@ body {
     position:absolute;
     border:1px solid #666;
     width:100%;
+  }
+  .bracket.active {
+    background:transparent url(/assets/active_bg.png) repeat left top;
   }
 }
 
@@ -105,18 +172,37 @@ body {
   }
 }
 
+#musicWrap {
+  -webkit-transition: all 1s ease-in-out;
+  background: transparent url(/assets/gun_metal.png) repeat left top;
+  padding:20px
+}
+
 .song {
   border:1px solid silver;
   overflow:hidden;
   float:left;
   margin-left:10px;
-
+  margin-bottom:30px;
+  position:relative;
   h3 {
+    text-shadow: rgba(0,0,0,0.5) -1px 0, rgba(0,0,0,0.3) 0 -1px, rgba(0,0,0,0.5) 0 1px, rgba(0,0,0,0.3) -1px -2px;
+    color:#b00000;
     position:absolute;
+    left:0;
+    right:0;
+    text-align:center;
+  }
+  h3.songTitle {
+    top:0;
+  }
+  h3.artist {
+    bottom:0;
   }
 }
 
 .song.current {
+  margin-right:50px;
  -moz-box-shadow: 0 0 5px 5px rgba(0,0,0,.5);
 -webkit-box-shadow: 0 0 5px 5px rgba(0,0,0,.5);
 box-shadow: 0 0 5px 5px rgba(0,0,0,.5); 
@@ -126,7 +212,7 @@ box-shadow: 0 0 5px 5px rgba(0,0,0,.5);
 }
 
 
-input, textarea, select {
+select {
   border:none;
   font-size: 20px;
   color: #fff;
@@ -139,3 +225,18 @@ select {
   padding: 0;
   background:transparent
 }
+
+#penaltyText {
+  left:0;
+  right:0;
+  bottom:-180px;
+  position:absolute;
+  z-index:99;
+   color: #EEE;
+    display: block;
+    font: 150px Helvetica,Arial,Sans-Serif;
+    letter-spacing: -5px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 10px 10px 45px #000;
+  }

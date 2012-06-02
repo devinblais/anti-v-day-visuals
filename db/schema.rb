@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120205220457) do
+ActiveRecord::Schema.define(:version => 20120211224130) do
 
   create_table "js_events", :force => true do |t|
     t.string   "functionName"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "args"
   end
 
   create_table "media", :force => true do |t|
@@ -26,6 +27,16 @@ ActiveRecord::Schema.define(:version => 20120205220457) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "artist"
+  end
+
+  create_table "penalties", :force => true do |t|
+    t.boolean  "alcohol"
+    t.boolean  "crossfit"
+    t.boolean  "active"
+    t.string   "name"
+    t.string   "abrev"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "spots", :force => true do |t|

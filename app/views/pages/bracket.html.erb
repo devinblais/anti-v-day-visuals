@@ -1,145 +1,90 @@
-<div id="wheel" style="background:transparent url(/assets/wheel.png) center center;width:1024px;height:768px;position:absolute;left:0;top:0;z-index:10"></div>  
+<% if mobile_device? %>
+  <style type="text/css">
+    select {
+      font-size: 8px;
+      font-family: helvetica, sans-serif;
+    }
+  </style> 
+<% end %> 
+<div id="wheelWrap" style="position:absolute;left:0;right:0;bottom:-300px;height:300px;text-align:center;">
+  <div style="width:1000px;margin:0 auto;text-align:center;">
+    <div style="margin:0 auto;width:125px;height:110px;z-index:10;background:transparent url(/assets/brokenHeart.png) no-repeat center center;position:relative;top:40px;"></div>
+    <canvas id="wheel" style="position:absolute;z-index:3;margin:0 auto" height="1000px" width="1000px"></canvas>
+  </div>
+</div>
 <% spot = 0 %>
 <div style="position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;">
   <div id="bracketWrap">
+    <div id="penaltyText"></div>
+    <div id="winningTeam"> <h1></h1></div>
+    <div id="redGradient"></div>
+    <div id="vdayLogo"></div>
     <div class="column col16">
       <% 4.times do |x| %>
-        <div class="bracket left bracket<%= x+1 %>">
+        <div id="bracket<%= spot %>" class="bracket left bracket<%= x+1 %>">
           <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
     <div class="column col8">
       <% 2.times do |x| %>
-        <div class="bracket left bracket<%= x+1 %>">
+        <div  id="bracket<%= spot %>" class="bracket left bracket<%= x+1 %>">
           <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
     <div class="column col4">
       <% 1.times do |x| %>
-        <div class="bracket left bracket<%= x+1 %>">
+        <div  id="bracket<%= spot %>" class="bracket left bracket<%= x+1 %>">
           <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
     <div class="column col2">
-      <div class="bracket middle">
-      
+      <div  id="bracket<%= spot %>" class="bracket middle">
+          <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     </div>
     <div class="column col4">
       <% 1.times do |x| %>
-        <div class="bracket right bracket<%= x+1 %>">
+        <div  id="bracket<%= spot %>" class="bracket right bracket<%= x+1 %>">
           <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
     <div class="column col8">
       <% 2.times do |x| %>
-        <div class="bracket right bracket<%= x+1 %>">
+        <div  id="bracket<%= spot %>" class="bracket right bracket<%= x+1 %>">
           <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
     <div class="column col16">
       <% 4.times do |x| %>
-        <div class="bracket right bracket<%= x+1 %>">
+        <div  id="bracket<%= spot %>" class="bracket right bracket<%= x+1 %>">
           <%= render :partial => 'teams', :locals => { :topID => "spot#{spot +=1 }",:bottomID => "spot#{spot +=1 }"} %>
       </div>
     <% end %>
     </div>
   </div>
-  <div id="musicWrap" style="position:absolute;left:0;right:0;top:80%;bottom:0%;-moz-box-shadow: inset 0 0 5px 5px #000;-webkit-box-shadow: inset 0 0 23px 12px #000;box-shadow: inset 0 0 23 12px #000;">
+  <div id="musicWrap">
   </div>
 </div>
 
 <div id="songClone" class="song" style="display:none">
   <h3 class="songTitle"></h3>
-  <video src="/assets/media/test_vid.m4v"></video> 
+  <h3 class="artist"></h3>
+  <video src=""></video> 
 </div>
 
+
 <script type="text/javascript">
-  var q = [],
-    eventQ = [],
-    fuckYou = {},
-    wheelRot = 0;
-
-  function rotate() {
-    var w = $("#wheel"),
-        tracker = 0,
-        start = wheelRot,
-        speed = Math.random() * 10 + 5;
-
-      spinTime = 0,
-      spinTimeTotal = Math.random() * 3 + 4 * 1000,
-
-    (function spin() {
-     var currAngle = start + tracker; 
-
-      w.css("-webkit-transform", "rotate("+currAngle+"deg)");
-      tracker += speed;
-      speed = speed/1.01;
-
-      if(speed > .03 ) {
-        setTimeout(spin, 10)
-      } else {
-        wheelRot = currAngle%360
-      }
-
-    })()
-  }
-  
-  $.fn.stopVideo = function() {
-    this.removeClass("current").find("video").get(0).pause();
-    return this;
-  }
-
-  $.fn.playVideo = function() {
-    $("#musicWrap").find("div.current").removeClass("current");
-    this.addClass("current").find("video").get(0).play();
-
-    var w = this.find("video").width();
-    this.animate({width:w+"px"})
-
-    return this;
-  }
-
-  function runFunctions() {
-    while(eventQ.length) {
-      var f = eventQ.shift();
-      fuckYou[f.functionName]();
-    }
-  }
-
-  fuckYou['nextSong'] = function() {
-    //Grab the first song and move it off the list
-    var allSongs = $("#musicWrap").find("div.song"),
-        songOne = allSongs.eq(0),
-        songTwo = allSongs.eq(1),
-        w = songOne.width();
-    
-    songOne.stopVideo().animate( {marginLeft:"-"+w+"px"}, function() {$(this).remove();songTwo.playVideo()});
-
-  }
-
-
-    function grabEvents() {
-      if(eventQ.length) { return }
-      $.ajax({
-        url: "/getAndDeleteEvents.json",
-        dataType: "JSON",
-        success: function(d){
-          eventQ = eventQ.concat(d)
-          runFunctions();
-        }
-      })
-
-      setTimeout(grabEvents,500);
-
-    }
+    var fuckYou = {
+      penalties: []
+    };
 
   $( function() {
+
     // Load any spots that already exist
       $.ajax({
         url: "/spots.json",
@@ -152,62 +97,13 @@
         }
       })
 
-      $("#bracketWrap").find("select").bind("change", function() {
-        var location = $(this).attr("id").replace("spot",""),
-          team = $(this).val();
 
-
-        $.ajax({
-          url: "/updateSpot.json",
-          type:'PUT',
-          data:{"location":location, "spot[team_id]":team},
-          success: function() {
-            },
-          error: function(d) {
-          }
-          })
-      })
-
-
-    //Start polling for new events
-    grabEvents();
-
-      $.ajax({
-        url: "/media.json",
-        dataType: "JSON",
-        success: function(d){
-          q = d;
-
-        var h = $("#musicWrap").height(),
-          padding=15;
-          
-          $("#musicWrap").empty();
-          
-          for(i=0, l=d.length;i<l;i++) {
-            var newSong = $("#songClone").clone().attr("id","");
-            newSong.css({height:h+"px",width:h+"px"}).find("h3").text(d[i].name)
-            newSong.find("video").attr("src",("/assets/media/"+d[i].src)).css("height",h)
-              .bind("ended", function() {
-                fuckYou.nextSong();
-              });
-            $("#musicWrap").append(newSong.show());
-
-            newSong.click(function() {
-              var $vid = $(this).find("video"),
-                vid = $vid.get(0);
-              // Check if video is currently playing
-              if(vid.currentTime > 0 && !vid.paused && !vid.ended) {
-                vid.pause();
-              } else { 
-                $(this).playVideo()      
-              }
-               
-            })
-
-          }
-        }
-      });
   })
 
 </script>
 
+<% if mobile_device? || params[:mobile] %>
+  <%= javascript_include_tag :mobile %>
+<% else %>
+  <%= javascript_include_tag :main %>
+<% end %>

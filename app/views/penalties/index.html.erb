@@ -1,0 +1,31 @@
+<h1>Listing penalties</h1>
+
+<table>
+  <tr>
+    <th>Alcohol</th>
+    <th>Crossfit</th>
+    <th>Active</th>
+    <th>Name</th>
+    <th>Abrev</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @penalties.each do |penalty| %>
+  <tr>
+    <td><%= penalty.alcohol %></td>
+    <td><%= penalty.crossfit %></td>
+    <td><%= penalty.active %></td>
+    <td><%= penalty.name %></td>
+    <td><%= penalty.abrev %></td>
+    <td><%= link_to 'Show', penalty %></td>
+    <td><%= link_to 'Edit', edit_penalty_path(penalty) %></td>
+    <td><%= link_to 'Destroy', penalty, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Penalty', new_penalty_path %>

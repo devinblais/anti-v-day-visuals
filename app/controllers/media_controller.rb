@@ -6,7 +6,7 @@ class MediaController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @media }
+      format.json { render json: @media.shuffle() }
     end
   end
 

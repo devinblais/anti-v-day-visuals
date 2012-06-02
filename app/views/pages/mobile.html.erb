@@ -1,0 +1,149 @@
+<div data-role="page" id="mainMenu">
+
+	<div data-role="header">
+		<h1>V-Day Sucks!</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+    <ul data-role="listview" data-inset="true" data-filter="true">
+      <li><a href="#showWheel">Spin the Wheel</a></li>
+      <li><a id="hideWheel" href="#">Hide Wheel</a></li>
+      <li><a href="#remoteControl">Video Controls</a></li>
+      <li><a href="#setWinner">Set Winner</a></li>
+      <li><a href="#admin">Admin</a></li>
+    </ul>
+	</div><!-- /content -->
+
+</div>
+
+<div data-role="page" id="showWheel">
+	<div data-role="header">
+    <a href="#mainMenu" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-left jqm-home ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-f" title="Home" data-theme="f"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Home</span><span class="ui-icon ui-icon-home ui-icon-shadow"></span></span></a>
+		<h1>Show Wheel</h1>
+	</div><!-- /header -->
+	<div data-role="content">	
+    <ul data-role="listview" data-inset="true" data-filter="true">
+      <li><a id="showAllPenalties" href="#spin" data-transition="flip">Show All</a></li>
+      <li><a id="showNoCrossfit" href="#spin">Show No Crossfit</a></li>
+      <li><a id="showNoAlc" href="#spin">Show No Alc</a></li>
+      <li><a id="showNoBoth" href="#spin">Show No Alc OR Crossfit</a></li>
+    </ul>
+	</div><!-- /content -->
+</div>
+
+<div data-role="page" id="remoteControl">
+	<div data-role="header">
+    <a href="#mainMenu" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-left jqm-home ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-f" title="Home" data-theme="f"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Home</span><span class="ui-icon ui-icon-home ui-icon-shadow"></span></span></a>
+		<h1>Remote Control..Bitch</h1>
+	</div><!-- /header -->
+	<div data-role="content">	
+    <ul data-role="listview" data-inset="true" data-filter="true">
+      <li><a id="playSong" href="#" data-transition="flip">Play Current</a></li>
+      <li><a id="pauseSong" href="#" data-transition="flip">Pause Current</a></li>
+      <li><a id="nextSong" href="#" data-transition="flip">Next Song</a></li>
+    </ul>
+	</div><!-- /content -->
+</div>
+
+<div data-role="page" id="spin">
+	<div data-role="header">
+    <a href="#mainMenu" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-left jqm-home ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-f" title="Home" data-theme="f"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Home</span><span class="ui-icon ui-icon-home ui-icon-shadow"></span></span></a>
+		<h1>SPIN</h1>
+	</div><!-- /header -->
+	<div data-role="content">	
+    <a id="spinButton" href="#" data-role="button" style="height:100%;">Spin</a>
+	</div><!-- /content -->
+</div>
+
+<div data-role="page" id="setWinner">
+	<div data-role="header">
+    <a href="#mainMenu" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-left jqm-home ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-f" title="Home" data-theme="f"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Home</span><span class="ui-icon ui-icon-home ui-icon-shadow"></span></span></a>
+		<h1>Winner winner chicken dinner</h1>
+	</div><!-- /header -->
+	<div data-role="content">	
+    <%= collection_select :spot, :team_id, @teams, :name, :name, {:include_blank => true }, { :id => :winner }%>
+	</div><!-- /content -->
+</div>
+
+
+<div data-role="page" id="admin">
+	<div data-role="header">
+    <a href="#mainMenu" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-left jqm-home ui-btn ui-btn-icon-notext ui-btn-corner-all ui-shadow ui-btn-up-f" title="Home" data-theme="f"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Home</span><span class="ui-icon ui-icon-home ui-icon-shadow"></span></span></a>
+		<h1>Admin Panel</h1>
+	</div><!-- /header -->
+	<div data-role="content">	
+    <ul data-role="listview" data-inset="true" data-filter="true">
+      <li><a id="reloadActivePenalties" href="#">Reload Active Penalties</a></li>
+      <li><a id="refreshPage" href="#">Refresh Page</a></li>
+      <li><a id="zoomBracket" href="#">Zoom Bracket</a></li>
+    </ul>
+	</div><!-- /content -->
+</div>
+<script type="text/javascript">
+function sendEvent(name, args) { 
+      args = args || "";
+
+        $.ajax({
+          url:"/js_events.json",
+          dataType:"JSON",
+          type:"POST",
+          data:{ js_event: {functionName: name, args: args}}
+        })
+  }
+  $(function() {
+
+      $("#zoomBracket").click(function() {
+        sendEvent("zoom")
+        })
+      $("#nextSong").click(function() {
+        sendEvent("nextSong")
+        })
+      $("#pauseSong").click(function() {
+        sendEvent("pauseSong")
+        })
+      $("#playSong").click(function() {
+        sendEvent("playSong")
+        })
+      $("#refreshPage").click(function() {
+        sendEvent("refreshPage")
+        })
+
+      $("#reloadActivePenalties").click(function() {
+        sendEvent("loadPenalties")
+        })
+      
+      $("#hideWheel").click(function() {
+        sendEvent("hideWheel")
+        })
+
+      $("#winner").bind('change', function() {
+        sendEvent("setWinner",$(this).val());
+      })
+
+      $("#spinButton").click(
+        function() {
+        sendEvent("spinWheel");
+      return false;
+      })
+
+      $("#showNoBoth").click(function() {
+        sendEvent("filterBoth")
+        sendEvent("showWheel")
+        })
+
+      $("#showNoAlc").click(function() {
+        sendEvent("filterAlc")
+        sendEvent("showWheel")
+        })
+
+      $("#showAllPenalties").click(function() {
+        sendEvent("filterNone")
+        sendEvent("showWheel")
+        })
+
+      $("#showNoCrossfit").click(function() {
+        sendEvent("filterCrossfit")
+        sendEvent("showWheel")
+        })
+    })
+</script>

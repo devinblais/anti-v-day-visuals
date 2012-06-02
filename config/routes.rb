@@ -1,4 +1,6 @@
 AntiVDay::Application.routes.draw do
+  resources :penalties
+
   resources :teams
 
   resources :spots
@@ -9,7 +11,9 @@ AntiVDay::Application.routes.draw do
   
   match '/getAndDeleteEvents' => 'js_events#getAndDelete'
   match '/updateSpot' => 'spots#ajaxUpdate'
+  match 'getPenalties' => 'penalties#activeOnly'
 
+  match '/mobile' => 'pages#mobile'
   root :to => 'pages#bracket'
 
   # The priority is based upon order of creation:

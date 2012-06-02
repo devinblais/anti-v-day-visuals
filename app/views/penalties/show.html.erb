@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Alcohol:</b>
+  <%= @penalty.alcohol %>
+</p>
+
+<p>
+  <b>Crossfit:</b>
+  <%= @penalty.crossfit %>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= @penalty.active %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @penalty.name %>
+</p>
+
+<p>
+  <b>abrev:</b>
+  <%= @penalty.abrev %>
+</p>
+
+
+<%= link_to 'Edit', edit_penalty_path(@penalty) %> |
+<%= link_to 'Back', penalties_path %>
